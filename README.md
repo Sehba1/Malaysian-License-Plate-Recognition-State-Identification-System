@@ -1,185 +1,137 @@
-```markdown
-# Malaysian Vehicle LPR & SIS — Definitive Technical Architecture
-**Stack:** Python · OpenCV · PaddleOCR · NumPy · PyWavelets · Tkinter · Pillow (PIL) · `re` (regex) · `logging` · etc.
+# Malaysian License Plate Recognition & State Identification System
 
+A computer vision application that detects Malaysian vehicle license plates, recognizes plate characters using Optical Character Recognition (OCR), and identifies the corresponding Malaysian state based on license plate prefixes.
 
-# 0. How to Execute
+This project was developed as part of a group assignment, with my primary contribution focused on the truck and pickup vehicle detection modules.
 
-### Standard Startup
-Ensure you have **Python 3.13.4** installed on your system. 
+---
 
-1. Open your terminal in the project root directory and install the dependencies:
-   ```bash
-   pip install -r requirements.txt
+## 📌 Project Overview
 
-2. Launch the graphical interface:
+The system processes vehicle images using classical computer vision techniques to localize license plates before extracting plate characters with PaddleOCR. The recognized license plate is then used to determine the corresponding Malaysian state based on official registration prefixes.
 
-python app_gui.py
+The project supports multiple Malaysian vehicle categories and includes an interactive graphical user interface for image processing and visualization.
 
-Troubleshooting: How to Recreate the Virtual Environment
-If the application fails to run or dependencies conflict (e.g., OpenCV or PaddleOCR throwing DLL/import errors), your virtual environment might be corrupted. Follow these steps to completely rebuild it.
+---
 
-For Windows:
-# 1. Deactivate the current environment (if it is currently active)
-deactivate
+## ✨ Features
 
-# 2. Delete the old virtual environment folder (assuming it's named 'venv')
-rmdir /s /q venv
+- Automatic Malaysian license plate detection
+- Optical Character Recognition (OCR) using PaddleOCR
+- Malaysian state identification from license plate prefixes
+- Image preprocessing pipeline for improved detection accuracy
+- Vehicle-specific detection modules
+- Interactive desktop graphical user interface
+- Step-by-step visualization of the image processing pipeline
 
-# 3. Create a fresh virtual environment using Python 3.13.4
-python -m venv venv
+---
 
-# 4. Activate the new environment
-venv\Scripts\activate
+## 👨‍💻 My Contribution
 
-# 5. Upgrade pip to avoid installation issues
-python -m pip install --upgrade pip
+As part of this group project, I was responsible for:
 
-# 6. Reinstall all required packages
+- Developing the truck and pickup vehicle detection modules
+- Designing vehicle-specific image preprocessing pipelines
+- Implementing adaptive thresholding and contour-based plate localization
+- Integrating PaddleOCR for license plate character recognition
+- Contributing to Malaysian state identification based on recognized plate prefixes
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- OpenCV
+- PaddleOCR
+- NumPy
+- PyWavelets
+- Pillow (PIL)
+- Tkinter
+- Regular Expressions (Regex)
+
+---
+
+## 🧠 Computer Vision Pipeline
+
+1. Load vehicle image
+2. Image preprocessing
+3. Contrast enhancement
+4. Adaptive thresholding
+5. Canny edge detection
+6. Morphological operations
+7. Contour analysis
+8. License plate localization
+9. Character recognition using PaddleOCR
+10. Malaysian state identification
+
+---
+
+## 🚀 Getting Started
+
+### Requirements
+
+- Python 3.13+
+- pip
+
+### Installation
+
+```bash
 pip install -r requirements.txt
+```
 
-# 7. Run the application
+### Run the Application
+
+```bash
 python app_gui.py
-
-
-
-For macOS / Linux:
-# 1. Deactivate the current environment (if it is currently active)
-deactivate
-
-# 2. Delete the old virtual environment folder
-rm -rf venv
-
-# 3. Create a fresh virtual environment using Python 3.13.4
-python3.13 -m venv venv
-
-# 4. Activate the new environment
-source venv/bin/activate
-
-# 5. Upgrade pip 
-pip install --upgrade pip
-
-# 6. Reinstall all required packages
-pip install -r requirements.txt
-
-# 7. Run the application
-python3 app_gui.py
-
+```
 
 ---
 
-## 1. Directory Structure
+## 📂 Project Structure
 
 ```
-LPR_SIS_System/
+Malaysian-License-Plate-Recognition-State-Identification-System/
 │
-├── main_processor.py          ← Orchestrator + STATE_MAP (Routing Core)
-├── app_gui.py                 ← Minimal Tkinter GUI, Starting Point of the program.
-├── generate_debug_grids.py    ← Batch testing utility: generates phase grids for the report
-│
-├── core/                      ← Shared Infrastructure
-│   ├── image_pipeline.py      ← Base preprocessing
-│   └── ocr_engine.py          ← PaddleOCR initialization, Regex validation, and text sanitization
-│
-├── processors/                ← Isolated Business Logic (Individual Contributions)
-│   │
-│   │  ── Manreen ─────────────────────────────────────────
-│   ├── car_processor.py       ← Standard Plate + TAXI + DIPLOMATIC
-│   ├── bus_processor.py       ← Standard Plate
-│   │
-│   │  ── Sehba ───────────────────────────────────────────
-│   ├── pickup_processor.py    ← Standard plate
-│   ├── truck_processor.py     ← Standard Plate
-│   │
-│   │  ── Egor ────────────────────────────────────────────
-│   ├── van_processor.py       ← Standard Plate
-│   ├── suv_processor.py       ← Standard Plate
-│   │
-│   │  ── Muqri ───────────────────────────────────────────
-│   ├── campervan_processor.py ← Standard Plate
-│   ├── jeep_processor.py      ← Standard Plate + MILITARY (Z-prefix)
-│   │
-│   │  ── Rudra ───────────────────────────────────────────
-│   ├── motorcycle_processor.py← TWO-ROW square plate geometry
-│   └── minibus_processor.py   ← Standard plates
-│
-├── debug_output/              ← Auto-generated visual artifacts
-│   ├── cars/        ├── trucks/      ├── campervans/   ├── pickups/
-│   ├── buses/       ├── vans/        ├── jeeps/        └── minibuses/
-│   └── motorcycles/ └── suvs/
-│
-└── test_images/               ← Datasets separated by vehicle taxonomy
-    ├── cars/        ├── trucks/      ├── campervans/   ├── pickups/
-    ├── buses/       ├── vans/        ├── jeeps/        └── minibuses/
-    └── motorcycles/ └── suvs/
+├── core/
+├── processors/
+├── test_images/
+├── processing_results/
+├── app_gui.py
+├── main_processor.py
+├── requirements.txt
+└── README.md
 ```
-
 
 ---
 
-## 2. Unified Return Interface & SIS Strategy
+## 📸 Sample Results
 
-### 2.1 The Processor Data Contract (Worker Output)
-Every `process(image_path)` in the 10 vehicle processors **must** return exactly this dictionary shape, on success or failure. The processors are strictly responsible for localization and OCR, nothing else.
+The project generates intermediate processing results including:
 
-| Key | Type | Meaning |
-|---|---|---|
-| `success` | `bool` | `True` only if a plate was localized AND OCR yielded ≥3 alnum chars |
-| `vehicle_type` | `str` | `"car"`, `"bus"`, `"motorcycle"`, … (hardcoded inside each module) |
-| `plate_category` | `str` | `"Standard"` / `"Taxi"` / `"Military"` / `"Diplomatic"` / `"Special Series"` / `"Two-Row"` / `"Unknown"` |
-| `plate_bbox` | `tuple\|None` | `(x, y, w, h)` in **original** (un-resized) image coordinates |
-| `plate_image` | `ndarray\|None` | Cropped, deskewed plate (BGR), used for GUI display |
-| `raw_ocr_text` | `str` | Untouched OCR output (best-of multi-phase) |
-| `cleaned_text` | `str` | Uppercase, alnum-only, position-aware confusion-fixes applied |
-| `confidence` | `float` | Composite 0.0–1.0 score |
-| `debug_stages` | `dict` | Phase-keyed dict of intermediate images for GUI inspection |
-| `error_message` | `str` | `""` on success; otherwise human-readable cause |
+- Original image
+- Grayscale conversion
+- Contrast enhancement
+- Wavelet transformation
+- Edge detection
+- Morphological processing
+- License plate localization
+- OCR recognition
+- Malaysian state identification
 
-### 2.2 The Enriched Data Contract (Orchestrator Output)
-Once the `main_processor.py` receives the dictionary from a vehicle processor, it acts as the orchestrator. It performs the state lookup based on the `cleaned_text` and `plate_category`, and injects two new keys before sending the final dictionary to the GUI (`app_gui.py`):
-
-| Injected Key | Type | Owner | Meaning |
-|---|---|---|---|
-| `state_code` | `str` | **main_processor** | E.g. `"P"`, `"KV"` |
-| `state_name` | `str` | **main_processor** | E.g. `"Penang"` |
-
-### 2.3 Why state identification lives only in `main_processor.py`
-- **Single Source of Truth:** Prevents maintaining and duplicating lookup dictionaries across 10 different vehicle processors.
-- **Strict Separation of Concerns:** Vehicle processors stay completely **state-agnostic**. Their only job is computer vision (localization) and text extraction (OCR).
-- **Clean Overrides:** Special categories (Military / Diplomatic / Taxi / Special Series) override prefix lookup cleanly via a single centralized function.
-
+*(Add screenshots here after uploading sample outputs.)*
 
 ---
 
-## 3. GUI Flow & Integration
+## 📄 License
 
-### 3.1 Files
-- **`app_gui.py`** — single GUI file, **Tkinter** 
-- The GUI imports **only `main_processor`** — never any vehicle processor directly
+This project is intended for educational and portfolio purposes.
 
-### 3.2 GUI Layout (minimalist, single window)
-```
-┌────────────────────────────────────────────────────────┐
-│  LPR & SIS — CT036-3-IPPR Group Project                │
-├────────────────────────────────────────────────────────┤
-│  [ Browse Image... ]      selected: car03.jpg          │
-│                                                        │
-│  Vehicle Type:  ( Car ▼ )                              │
-│   Car · Bus · Motorcycle · Truck · Van ·               │
-│   SUV · Campervan · Jeep · Pickup · Minibus            │
-│                                                        │
-│  [ Run Detection ]                                     │
-├────────────────────────────────────────────────────────┤
-│  ┌───────────────────┐    ┌───────────────────┐        │
-│  │  Original Image   │    │  Detected Plate   │        │
-│  │  (with bbox)      │    │  (cropped)        │        │
-│  └───────────────────┘    └───────────────────┘        │
-│                                                        │
-│  Plate Number :  PJC 1234                              │
-│  Plate Type   :  Standard                              │
-│  State        :  Penang                                │
-│  Confidence   :  0.87                                  │
-│                                                        │
-│                                                        │
-└────────────────────────────────────────────────────────┘
-```
+## Team Contribution
+
+This project was completed as a group assignment. My primary responsibilities included:
+
+- Truck vehicle detection module
+- Pickup vehicle detection module
+- License plate localization for assigned vehicle categories
+- OCR integration using PaddleOCR
+- Testing and validation of assigned modules
