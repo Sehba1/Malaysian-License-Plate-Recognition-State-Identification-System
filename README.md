@@ -1,6 +1,6 @@
 ```markdown
 # Malaysian Vehicle LPR & SIS — Definitive Technical Architecture
- **Group Project** · **Stack:** Python · OpenCV · PaddleOCR · NumPy · PyWavelets · Tkinter · Pillow (`PIL`) · `re` (regex) · `logging` · etc.
+**Stack:** Python · OpenCV · PaddleOCR · NumPy · PyWavelets · Tkinter · Pillow (`PIL`) · `re` (regex) · `logging` · etc.
 
 
 # 0. How to Execute
