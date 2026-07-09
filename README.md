@@ -118,7 +118,7 @@ The project generates intermediate processing results including:
 - OCR recognition
 - Malaysian state identification
 
-*(Add screenshots here after uploading sample outputs.)*
+
 
 ---
 
